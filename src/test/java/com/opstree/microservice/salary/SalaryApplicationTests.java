@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import javax.sql.DataSource;                     // For DataSource
 import org.springframework.boot.test.mock.mockito.MockBean;  // For @MockBean
-import org.springframework.data.redis.core.RedisTemplate;   // For RedisTemplate
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.test.context.ActiveProfiles;
+// For RedisTemplate
 
 
 @SpringBootTest
