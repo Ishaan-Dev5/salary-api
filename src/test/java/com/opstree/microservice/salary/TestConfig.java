@@ -1,3 +1,4 @@
+
 package com.opstree.microservice.salary;
 
 import org.springframework.boot.test.context.TestConfiguration;
@@ -20,3 +21,4 @@ public class TestConfig {
         return mock(RedisCacheManager.class);
     }
 }
+
