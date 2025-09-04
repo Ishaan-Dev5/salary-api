@@ -12,14 +12,10 @@ import org.springframework.test.context.ActiveProfiles;
 class SalaryApplicationTests {
 
     @MockBean
-    private DataSource dataSource;   // Mock DB connection
+    private DataSource dataSource;
 
     @MockBean
-    private RedisTemplate<String, Object> redisTemplate;  // Mock Redis connection
-
-    // Remove CassandraTemplate if you don't have dependency
-    // @MockBean
-    // private CassandraTemplate cassandraTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Test
     void contextLoads() {}
