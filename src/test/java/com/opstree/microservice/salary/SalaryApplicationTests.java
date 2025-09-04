@@ -6,11 +6,13 @@ import org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfigurati
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 
 @SpringBootTest(
-    classes = SalaryApplication.class,
+    classes = {SalaryApplication.class, SalaryApplicationTests.TestConfig.class},
     webEnvironment = SpringBootTest.WebEnvironment.NONE
 )
 @EnableAutoConfiguration(exclude = {
@@ -18,15 +20,23 @@ import org.springframework.test.context.TestPropertySource;
     RedisAutoConfiguration.class,
     CassandraAutoConfiguration.class
 })
-@ActiveProfiles("test")
-@TestPropertySource(properties = {
-    "spring.data.cassandra.repositories.enabled=false",
-    "spring.autoconfigure.exclude=org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory"
-})
 class SalaryApplicationTests {
+
+    @Configuration
+    static class TestConfig {
+        @Bean
+        RedisConnectionFactory redisConnectionFactory() {
+            return org.mockito.Mockito.mock(RedisConnectionFactory.class);
+        }
+
+        @Bean
+        RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
+            return new RedisTemplate<>();
+        }
+    }
 
     @Test
     void contextLoads() {
+        // Passes if context starts successfully
     }
 }
-
