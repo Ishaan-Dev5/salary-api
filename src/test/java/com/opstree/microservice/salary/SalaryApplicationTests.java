@@ -17,11 +17,11 @@ import org.springframework.context.annotation.Import;
     RedisAutoConfiguration.class,
     CassandraAutoConfiguration.class
 })
-@Import(TestConfig.class)  // External TestConfig import
+@Import(TestConfig.class)
 class SalaryApplicationTests {
 
     @Test
     void contextLoads() {
-        // Test passes if application context loads successfully
+        // Test passes if context starts successfully
     }
 }
