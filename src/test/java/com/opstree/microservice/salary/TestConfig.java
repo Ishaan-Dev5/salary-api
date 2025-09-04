@@ -1,12 +1,22 @@
+package com.opstree.microservice.salary;
+
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.core.RedisTemplate;
+
+import static org.mockito.Mockito.mock;
+
 @TestConfiguration
-class TestRedisConfig {
+public class TestConfig {
+
     @Bean
-    RedisTemplate<Object, Object> redisTemplate() {
+    public RedisTemplate<Object, Object> redisTemplate() {
         return mock(RedisTemplate.class);
     }
 
     @Bean
-    RedisCacheManager cacheManager() {
+    public RedisCacheManager cacheManager() {
         return mock(RedisCacheManager.class);
     }
 }
