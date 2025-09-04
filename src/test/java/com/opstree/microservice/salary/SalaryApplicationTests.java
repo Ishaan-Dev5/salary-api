@@ -7,29 +7,25 @@ import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest(
     classes = SalaryApplication.class,
     webEnvironment = SpringBootTest.WebEnvironment.NONE
 )
 @EnableAutoConfiguration(exclude = {
-    DataSourceAutoConfiguration.class,   // Skip DB auto-config
-    RedisAutoConfiguration.class,        // Skip Redis auto-config
-    CassandraAutoConfiguration.class     // Skip Cassandra auto-config
+    DataSourceAutoConfiguration.class,
+    RedisAutoConfiguration.class,
+    CassandraAutoConfiguration.class
 })
-@TestConfiguration
-public class CassandraMockConfig {
-    @Bean
-    public EmployeeRepository employeeRepository() {
-        return Mockito.mock(EmployeeRepository.class);
-    }
-}
-
 @ActiveProfiles("test")
+@TestPropertySource(properties = {
+    "spring.data.cassandra.repositories.enabled=false"
+})
 class SalaryApplicationTests {
 
     @Test
     void contextLoads() {
-        // Test passes if Spring context loads
+        // Passes if Spring context loads without Cassandra
     }
 }
