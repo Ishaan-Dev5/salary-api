@@ -20,12 +20,13 @@ import org.springframework.test.context.TestPropertySource;
 })
 @ActiveProfiles("test")
 @TestPropertySource(properties = {
-    "spring.data.cassandra.repositories.enabled=false"
+    "spring.data.cassandra.repositories.enabled=false",
+    "spring.autoconfigure.exclude=org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory"
 })
 class SalaryApplicationTests {
 
     @Test
     void contextLoads() {
-        // Passes if Spring context loads without Cassandra
     }
 }
+
