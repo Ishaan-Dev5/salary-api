@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;   // For RedisTemplate
 
 
 @SpringBootTest
+@ActiveProfiles("test")
 class SalaryApplicationTests {
 	 @MockBean
     private DataSource dataSource;   // Mock DB connection
