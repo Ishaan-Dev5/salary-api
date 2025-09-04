@@ -6,31 +6,42 @@ import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.core.RedisTemplate;
+
+import static org.mockito.Mockito.mock;
 
 @SpringBootTest(
     classes = {SalaryApplicationTests.TestConfig.class},
-    webEnvironment = SpringBootTest.WebEnvironment.NONE // No web server needed
+    webEnvironment = SpringBootTest.WebEnvironment.NONE
 )
 @EnableAutoConfiguration(exclude = {
-    DataSourceAutoConfiguration.class, 
-    RedisAutoConfiguration.class, 
+    DataSourceAutoConfiguration.class,
+    RedisAutoConfiguration.class,
     CassandraAutoConfiguration.class
 })
 class SalaryApplicationTests {
 
     @Test
     void contextLoads() {
-        // This test just ensures the Spring context can start
+        // Ensures Spring context starts successfully
     }
 
-    /**
-     * Test configuration to safely load the context in Jenkins
-     */
     @Configuration
-    @Import({SalaryApplication.class}) // Import your main application class
+    @Import({SalaryApplication.class})
     static class TestConfig {
-        // You can define mock beans here if any required beans fail during context loading
+
+        @Bean
+        public RedisTemplate<Object, Object> redisTemplate() {
+            return mock(RedisTemplate.class);
+        }
+
+        @Bean
+        public RedisCacheManager cacheManager() {
+            return mock(RedisCacheManager.class);
+        }
     }
 }
