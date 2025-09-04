@@ -6,13 +6,16 @@ import org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfigurati
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import static org.mockito.Mockito.mock;
+
 @SpringBootTest(
-    classes = {SalaryApplication.class, SalaryApplicationTests.TestConfig.class},
+    classes = SalaryApplication.class,
     webEnvironment = SpringBootTest.WebEnvironment.NONE
 )
 @EnableAutoConfiguration(exclude = {
@@ -20,18 +23,19 @@ import org.springframework.data.redis.core.RedisTemplate;
     RedisAutoConfiguration.class,
     CassandraAutoConfiguration.class
 })
+@Import(SalaryApplicationTests.TestRedisConfig.class)
 class SalaryApplicationTests {
 
-    @Configuration
-    static class TestConfig {
+    @TestConfiguration
+    static class TestRedisConfig {
         @Bean
-        RedisConnectionFactory redisConnectionFactory() {
-            return org.mockito.Mockito.mock(RedisConnectionFactory.class);
+        RedisTemplate<Object, Object> redisTemplate() {
+            return mock(RedisTemplate.class);
         }
 
         @Bean
-        RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
-            return new RedisTemplate<>();
+        RedisCacheManager cacheManager() {
+            return mock(RedisCacheManager.class);
         }
     }
 
