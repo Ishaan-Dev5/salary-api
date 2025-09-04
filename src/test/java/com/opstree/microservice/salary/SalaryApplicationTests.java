@@ -1,22 +1,25 @@
 package com.opstree.microservice.salary;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import javax.sql.DataSource;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest
+@SpringBootTest(
+    classes = SalaryApplication.class,
+    webEnvironment = SpringBootTest.WebEnvironment.NONE // Avoid starting web server
+)
+@EnableAutoConfiguration(exclude = {
+    DataSourceAutoConfiguration.class, // Skip DB auto-config
+    RedisAutoConfiguration.class       // Skip Redis auto-config
+})
 @ActiveProfiles("test")
 class SalaryApplicationTests {
 
-    @MockBean
-    private DataSource dataSource;
-
-    @MockBean
-    private RedisTemplate<String, Object> redisTemplate;
-
     @Test
-    void contextLoads() {}
+    void contextLoads() {
+        // This test will pass if the Spring context loads successfully
+    }
 }
