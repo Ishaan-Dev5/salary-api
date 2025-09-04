@@ -1,47 +1,23 @@
 package com.opstree.microservice.salary;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import static org.mockito.Mockito.mock;
-
-@SpringBootTest(
-    classes = {SalaryApplicationTests.TestConfig.class},
-    webEnvironment = SpringBootTest.WebEnvironment.NONE
-)
-@EnableAutoConfiguration(exclude = {
-    DataSourceAutoConfiguration.class,
-    RedisAutoConfiguration.class,
-    CassandraAutoConfiguration.class
-})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class SalaryApplicationTests {
+
+    // Mock existing beans instead of redefining them
+    @MockBean
+    private RedisTemplate<Object, Object> redisTemplate;
+
+    @MockBean
+    private RedisCacheManager cacheManager;
 
     @Test
     void contextLoads() {
         // Ensures Spring context starts successfully
-    }
-
-    @Configuration
-    @Import({SalaryApplication.class})
-    static class TestConfig {
-
-        @Bean
-        public RedisTemplate<Object, Object> redisTemplate() {
-            return mock(RedisTemplate.class);
-        }
-
-        @Bean
-        public RedisCacheManager cacheManager() {
-            return mock(RedisCacheManager.class);
-        }
     }
 }
