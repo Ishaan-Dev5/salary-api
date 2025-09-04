@@ -17,6 +17,14 @@ import org.springframework.test.context.ActiveProfiles;
     RedisAutoConfiguration.class,        // Skip Redis auto-config
     CassandraAutoConfiguration.class     // Skip Cassandra auto-config
 })
+@TestConfiguration
+public class CassandraMockConfig {
+    @Bean
+    public EmployeeRepository employeeRepository() {
+        return Mockito.mock(EmployeeRepository.class);
+    }
+}
+
 @ActiveProfiles("test")
 class SalaryApplicationTests {
 
