@@ -18,6 +18,9 @@ class SalaryApplicationTests {
     @MockBean
     private RedisTemplate redisTemplate;  // Mock Redis conne
 
+	 @MockBean
+    private CassandraTemplate cassandraTemplate;
+
 	@Test
 	void contextLoads() {
 	}
