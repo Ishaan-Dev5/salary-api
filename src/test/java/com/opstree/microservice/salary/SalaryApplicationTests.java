@@ -6,6 +6,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.core.RedisTemplate;
 
+
+@MockBean
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class SalaryApplicationTests {
 
