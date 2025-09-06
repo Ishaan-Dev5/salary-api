@@ -8,7 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 
 @MockBean
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+// @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class SalaryApplicationTests {
 
     // Mock existing beans instead of redefining them
